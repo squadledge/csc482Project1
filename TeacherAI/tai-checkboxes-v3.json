@@ -1,0 +1,602 @@
+[
+  {
+    "name": "overall",
+    "multiplier": 1,
+    "checkboxes": [
+      {
+        "grade_level": 2,
+        "desc": "taught readers some important points about subjects",
+        "type": "pos",
+        "name": "2-0_overall"
+      },
+      {
+        "grade_level": 3,
+        "desc": "taught readers information about a subject",
+        "type": "pos",
+        "name": "3-0_overall"
+      },
+      {
+        "grade_level": 3,
+        "desc": "put in ideas, observations, and questions",
+        "type": "pos",
+        "name": "3-1_overall"
+      },
+      {
+        "grade_level": 4,
+        "desc": "taught readers different things about a subject",
+        "type": "pos",
+        "name": "4-0_overall"
+      },
+      {
+        "grade_level": 4,
+        "desc": "put one or more of facts, details, quotes, or ideas into each part of writing",
+        "type": "pos",
+        "name": "4-1_overall"
+      },
+      {
+        "grade_level": 5,
+        "desc": "used different kinds of information to teach about the subject",
+        "type": "pos",
+        "name": "5-0_overall"
+      },
+      {
+        "grade_level": 5,
+        "desc": "sometimes included little essays, stories, or how-to sections in writing",
+        "type": "pos",
+        "name": "5-1_overall"
+      }
+    ]
+  },
+  {
+    "name": "lead",
+    "multiplier": 1,
+    "checkboxes": [
+      {
+        "grade_level": 2,
+        "desc": "wrote a beginning in which he named a subject and tried to interest readers",
+        "type": "pos",
+        "name": "2-0_lead"
+      },
+      {
+        "grade_level": 3,
+        "desc": "wrote a beginning in which he got readers ready to learn a lot of information about the subject",
+        "type": "pos",
+        "name": "3-0_lead"
+      },
+      {
+        "grade_level": 4,
+        "desc": "hooked her readers by explaining why the subject mattered, telling a surprising fact, or giving a big picture",
+        "type": "pos",
+        "name": "4-0_lead"
+      },
+      {
+        "grade_level": 4,
+        "desc": "let readers know that she would teach them different things about a subject",
+        "type": "pos",
+        "name": "4-1_lead"
+      },
+      {
+        "grade_level": 5,
+        "desc": "wrote an introduction in which he helped readers get interested in and understand the subject",
+        "type": "pos",
+        "name": "5-0_lead"
+      },
+      {
+        "grade_level": 5,
+        "desc": "let readers know the subtopics that he would develop later as well as the sequence",
+        "type": "pos",
+        "name": "5-1_lead"
+      }
+    ]
+  },
+  {
+    "name": "transitions",
+    "multiplier": 1,
+    "checkboxes": [
+      {
+        "grade_level": 2,
+        "desc": "used words such as and and also to show she had more to say",
+        "type": "pos",
+        "name": "2-0_transitions"
+      },
+      {
+        "grade_level": 3,
+        "desc": "used words to show sequence such as before, after, then, and later",
+        "type": "pos",
+        "name": "3-0_transitions"
+      },
+      {
+        "grade_level": 3,
+        "desc": "used words to show what did not fit: however and but",
+        "type": "pos",
+        "name": "3-1_transitions"
+      },
+      {
+        "grade_level": 4,
+        "desc": "used words in each section that helped readers understand how one piece of information connected with others",
+        "type": "pos",
+        "name": "4-0_transitions"
+      },
+      {
+        "grade_level": 4,
+        "desc": "if he wrote the section in sequence, he used words and phrases such as before, later, next, then, and after",
+        "type": "pos",
+        "name": "4-1_transitions"
+      },
+      {
+        "grade_level": 4,
+        "desc": "if he organized the section in kinds or parts, he used words such as another, also, and for example",
+        "type": "pos",
+        "name": "4-2_transitions"
+      },
+      {
+        "grade_level": 5,
+        "desc": "when writing about results, used words and phrases such as consequently, as a result, and because of this",
+        "type": "pos",
+        "name": "5-0_transitions"
+      },
+      {
+        "grade_level": 5,
+        "desc": "when compared information, she used phrases such as in contrast, by comparison, and especially",
+        "type": "pos",
+        "name": "5-1_transitions"
+      },
+      {
+        "grade_level": 5,
+        "desc": "in narrative parts, she used phrases that go with stories such as a little later and three hours later",
+        "type": "pos",
+        "name": "5-2_transitions"
+      },
+      {
+        "grade_level": 5,
+        "desc": "if she wrote sections that stated an opinion, she used words such as but the most important reason, for example, and consequently",
+        "type": "pos",
+        "name": "5-3_transitions"
+      }
+    ]
+  },
+  {
+    "name": "ending",
+    "multiplier": 1,
+    "checkboxes": [
+      {
+        "grade_level": 2,
+        "desc": "wrote some sentences or a section at the end to wrap up his piece",
+        "type": "pos",
+        "name": "2-0_ending"
+      },
+      {
+        "grade_level": 3,
+        "desc": "wrote an ending that drew conclusions, asked questions, or suggested ways readers might respond",
+        "type": "pos",
+        "name": "3-0_ending"
+      },
+      {
+        "grade_level": 4,
+        "desc": "wrote an ending in which she reminded readers of her subject and may either have suggested a follow-up action or left readers with a final insight",
+        "type": "pos",
+        "name": "4-0_ending"
+      },
+      {
+        "grade_level": 4,
+        "desc": "added thoughts, feelings, and questions about the subject at the end",
+        "type": "pos",
+        "name": "4-1_ending"
+      },
+      {
+        "grade_level": 5,
+        "desc": "wrote a conclusion in which he restated the main points and may have offered a final thought or question for readers to consider",
+        "type": "pos",
+        "name": "5-0_ending"
+      }
+    ]
+  },
+  {
+    "name": "organization",
+    "multiplier": 1,
+    "checkboxes": [
+      {
+        "grade_level": 2,
+        "desc": "writing had different parts. Each part told different information about the topic",
+        "type": "pos",
+        "name": "2-0_organization"
+      },
+      {
+        "grade_level": 3,
+        "desc": "grouped her information into parts",
+        "type": "pos",
+        "name": "3-0_organization"
+      },
+      {
+        "grade_level": 3,
+        "desc": "each part was mostly about one thing that connected to her topic",
+        "type": "pos",
+        "name": "3-1_organization"
+      },
+      {
+        "grade_level": 3,
+        "desc": "emerging paragraphs",
+        "type": "pos",
+        "name": "3-2_organization"
+      },
+      {
+        "grade_level": 3,
+        "desc": "each part supports whole topic",
+        "type": "pos",
+        "name": "3-3_organization"
+      },
+      {
+        "grade_level": 4,
+        "desc": "used clear paragraphing",
+        "type": "pos",
+        "name": "4-0_organization"
+      },
+      {
+        "grade_level": 4,
+        "desc": "information was mostly about the same topic",
+        "type": "pos",
+        "name": "4-1_organization"
+      },
+      {
+        "grade_level": 4,
+        "desc": "may have used headings and subheadings",
+        "type": "pos",
+        "name": "4-2_organization"
+      },
+      {
+        "grade_level": 5,
+        "desc": "organized writing into a sequence of separate sections giving equal weight to sections",
+        "type": "pos",
+        "name": "5-0_organization"
+      },
+      {
+        "grade_level": 5,
+        "desc": "may have used headings and subheadings to highlight the separate sections",
+        "type": "pos",
+        "name": "5-1_organization"
+      },
+      {
+        "grade_level": 5,
+        "desc": "wrote each section according to an organizational plan shaped partly by the genre of the section",
+        "type": "pos",
+        "name": "5-2_organization"
+      }
+    ]
+  },
+  {
+    "name": "elaboration",
+    "multiplier": 2,
+    "checkboxes": [
+      {
+        "grade_level": 2,
+        "desc": "used different kinds of information in his writing such as facts, definitions, details, steps, and tips",
+        "type": "pos",
+        "name": "2-0_elaboration"
+      },
+      {
+        "grade_level": 3,
+        "desc": "wrote facts, definitions, details, and observations about his topic and explained some of them",
+        "type": "pos",
+        "name": "3-0_elaboration"
+      },
+      {
+        "grade_level": 4,
+        "desc": "taught her readers different things about the subject",
+        "type": "pos",
+        "name": "4-0_elaboration"
+      },
+      {
+        "grade_level": 4,
+        "desc": "chose those subtopics because they were important and interesting",
+        "type": "pos",
+        "name": "4-1_elaboration"
+      },
+      {
+        "grade_level": 4,
+        "desc": "included different kinds of facts and details such as numbers, names, and examples",
+        "type": "pos",
+        "name": "4-2_elaboration"
+      },
+      {
+        "grade_level": 4,
+        "desc": "got her information from talking to people, reading books, and from her own knowledge and observations",
+        "type": "pos",
+        "name": "4-3_elaboration"
+      },
+      {
+        "grade_level": 4,
+        "desc": "made choices about organization, perhaps using compare/contrast, cause/effect, or pro/con",
+        "type": "pos",
+        "name": "4-4_elaboration"
+      },
+      {
+        "grade_level": 4,
+        "desc": "used diagrams, charts, headings, bold words, and definition boxes to help teach her readers",
+        "type": "pos",
+        "name": "4-5_elaboration"
+      },
+      {
+        "grade_level": 5,
+        "desc": "explained different aspects of a subject",
+        "type": "pos",
+        "name": "5-0_elaboration"
+      },
+      {
+        "grade_level": 5,
+        "desc": "included a variety of information such as examples, details, dates, and quotes",
+        "type": "pos",
+        "name": "5-1_elaboration"
+      },
+      {
+        "grade_level": 5,
+        "desc": "used trusted sources and gave credit when appropriate",
+        "type": "pos",
+        "name": "5-2_elaboration"
+      },
+      {
+        "grade_level": 5,
+        "desc": "made sure to research any details that would add to his writing",
+        "type": "pos",
+        "name": "5-3_elaboration"
+      },
+      {
+        "grade_level": 5,
+        "desc": "worked to make his information understandable to readers",
+        "type": "pos",
+        "name": "5-4_elaboration"
+      },
+      {
+        "grade_level": 5,
+        "desc": "to do this, he may have referred to earlier parts of his text and summarized background information",
+        "type": "pos",
+        "name": "5-5_elaboration"
+      },
+      {
+        "grade_level": 5,
+        "desc": "let readers know when he was discussing facts and when he was offering his own thinking",
+        "type": "pos",
+        "name": "5-6_elaboration"
+      }
+    ]
+  },
+  {
+    "name": "craft",
+    "multiplier": 2,
+    "checkboxes": [
+      {
+        "grade_level": 2,
+        "desc": "tried to include the words that showed she was an expert on the subject",
+        "type": "pos",
+        "name": "2-0_craft"
+      },
+      {
+        "grade_level": 3,
+        "desc": "chose expert words to teach readers a lot about the subject",
+        "type": "pos",
+        "name": "3-0_craft"
+      },
+      {
+        "grade_level": 3,
+        "desc": "taught information in a way to interest readers",
+        "type": "pos",
+        "name": "3-1_craft"
+      },
+      {
+        "grade_level": 3,
+        "desc": "may have used drawings, captions, or diagrams",
+        "type": "pos",
+        "name": "3-2_craft"
+      },
+      {
+        "grade_level": 4,
+        "desc": "made deliberate word choices to teach his readers",
+        "type": "pos",
+        "name": "4-0_craft"
+      },
+      {
+        "grade_level": 4,
+        "desc": "may have done this by using and repeating key words about his topic",
+        "type": "pos",
+        "name": "4-1_craft"
+      },
+      {
+        "grade_level": 4,
+        "desc": "when felt right to do so, the writer chose interesting comparisons and used figurative language to clarify his points",
+        "type": "pos",
+        "name": "4-2_craft"
+      },
+      {
+        "grade_level": 4,
+        "desc": "made choices about which information was best to include or not include",
+        "type": "pos",
+        "name": "4-3_craft"
+      },
+      {
+        "grade_level": 4,
+        "desc": "used a teaching tone",
+        "type": "pos",
+        "name": "4-4_craft"
+      },
+      {
+        "grade_level": 4,
+        "desc": "may have used phrases such as that means ..., what that really means is ..., and let me explain",
+        "type": "pos",
+        "name": "4-5_craft"
+      },
+      {
+        "grade_level": 5,
+        "desc": "made deliberate word choices to have an effect on her readers",
+        "type": "pos",
+        "name": "5-0_craft"
+      },
+      {
+        "grade_level": 5,
+        "desc": "used the vocabulary of experts and explained key terms",
+        "type": "pos",
+        "name": "5-1_craft"
+      },
+      {
+        "grade_level": 5,
+        "desc": "worked to include the exact phrase, comparison, or image that would explain information and concepts",
+        "type": "pos",
+        "name": "5-2_craft"
+      },
+      {
+        "grade_level": 5,
+        "desc": "not only made choices about which details and facts to include but also made choices about how to convey her information so it would make sense to readers",
+        "type": "pos",
+        "name": "5-3_craft"
+      },
+      {
+        "grade_level": 5,
+        "desc": "blended storytelling, summary, and other genres as needed and used text features",
+        "type": "pos",
+        "name": "5-4_craft"
+      },
+      {
+        "grade_level": 5,
+        "desc": "used a consistent, inviting, teaching tone and varied her sentences to help readers take in and understand the information",
+        "type": "pos",
+        "name": "5-5_craft"
+      }
+    ]
+  },
+  {
+    "name": "spelling",
+    "multiplier": 1,
+    "checkboxes": [
+      {
+        "grade_level": 0,
+        "desc": "No spelling errors!",
+        "type": "pos",
+        "name": "0-0_spelling"
+      },
+      {
+        "grade_level": 0,
+        "desc": "1-3 spelling mistakes",
+        "type": "neg",
+        "name": "0-1_spelling"
+      },
+      {
+        "grade_level": 0,
+        "desc": "4-6 spelling mistakes",
+        "type": "neg",
+        "name": "0-2_spelling"
+      },
+      {
+        "grade_level": 0,
+        "desc": "7+ spelling mistakes",
+        "type": "neg",
+        "name": "0-3_spelling"
+      },
+      {
+        "grade_level": 0,
+        "desc": "contains incorrect usage of words",
+        "type": "neg",
+        "name": "0-4_spelling"
+      }
+    ]
+  },
+  {
+    "name": "punctuation",
+    "multiplier": 1,
+    "checkboxes": [
+      {
+        "grade_level": 0,
+        "desc": "No punctuation errors!",
+        "type": "pos",
+        "name": "0-0_punctuation"
+      },
+      {
+        "grade_level": 0,
+        "desc": "1-3 punctuation mistakes",
+        "type": "neg",
+        "name": "0-1_punctuation"
+      },
+      {
+        "grade_level": 0,
+        "desc": "4-6 punctuation mistakes",
+        "type": "neg",
+        "name": "0-2_punctuation"
+      },
+      {
+        "grade_level": 0,
+        "desc": "7+ punctuation mistakes",
+        "type": "neg",
+        "name": "0-3_punctuation"
+      },
+      {
+        "grade_level": 0,
+        "desc": "contains end of sentence marker mistakes (period, question marks, etc.)",
+        "type": "neg",
+        "name": "0-4_punctuation"
+      },
+      {
+        "grade_level": 0,
+        "desc": "contains mid-sentence punctuation mistakes (comma, quotes, colon, etc.)",
+        "type": "neg",
+        "name": "0-5_punctuation"
+      },
+      {
+        "grade_level": 0,
+        "desc": "contains capitalization errors",
+        "type": "neg",
+        "name": "0-6_punctuation"
+      }
+    ]
+  },
+  {
+    "name": "grammar",
+    "multiplier": 1,
+    "checkboxes": [
+      {
+        "grade_level": 0,
+        "desc": "No grammar errors!",
+        "type": "pos",
+        "name": "0-0_grammar"
+      },
+      {
+        "grade_level": 0,
+        "desc": "1-3 mistakes",
+        "type": "neg",
+        "name": "0-1_grammar"
+      },
+      {
+        "grade_level": 0,
+        "desc": "4-6 mistakes",
+        "type": "neg",
+        "name": "0-2_grammar"
+      },
+      {
+        "grade_level": 0,
+        "desc": "7+ mistakes",
+        "type": "neg",
+        "name": "0-3_grammar"
+      },
+      {
+        "grade_level": 0,
+        "desc": "contains pronoun errors / misuse",
+        "type": "neg",
+        "name": "0-4_grammar"
+      },
+      {
+        "grade_level": 0,
+        "desc": "contains verb tense errors",
+        "type": "neg",
+        "name": "0-5_grammar"
+      },
+      {
+        "grade_level": 0,
+        "desc": "contains subject/verb errors",
+        "type": "neg",
+        "name": "0-6_grammar"
+      },
+      {
+        "grade_level": 0,
+        "desc": "contains run-on/fragments",
+        "type": "neg",
+        "name": "0-7_grammar"
+      }
+    ]
+  }
+]
