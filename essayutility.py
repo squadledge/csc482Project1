@@ -25,6 +25,8 @@ def plaintext_prep(essay):
     return word_tokenize(essay["plaintext"])
 
 def vocab_size(words):
+    #make robust
+    #stemming and normalization before counting vocabulary
     return len(set(words))
 
 good_vocab_avg = [vocab_size(plaintext_prep(i)) for i in good_leads]
@@ -34,3 +36,6 @@ print(good_vocab_avg)
 bad_vocab_avg = [vocab_size(plaintext_prep(i)) for i in bad_leads]
 bad_vocab_avg = sum(bad_vocab_avg) / len(bad_vocab_avg)
 print(bad_vocab_avg)
+
+
+
