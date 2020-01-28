@@ -20,10 +20,10 @@ def get_recent_version(grade_list):
     return max(grade_list, key=lambda grade: grade['version'])
 
 
-# returns the ending paragraph (list of list of tokens)
-def get_ending(raw_text):
+# returns the lead paragraph (list of list of tokens)
+def get_lead(raw_text):
     for i in range(4, 0, -1):
-        for paragraph in raw_text[::-1]:
+        for paragraph in raw_text:
             if len(paragraph) >= i:
                 return paragraph
     raise Exception('No paragraphs with sentences')
@@ -73,16 +73,27 @@ def get_sentence_length_range(paragraph):
     return max_length - min_length
 
 
+# returns most common pos of first word in sentences
+def get_sentence_starter_percents(paragraph):
+    starter_list = []
+    for sentence in paragraph:
+        starter_list.append(nltk.pos_tag(sentence)[0][1])
+    starter_counts = dict()
+    for i in starter_list:
+        starter_counts[i] = starter_counts.get(i, 0) + 1
+    return starter_counts
+
+
 def get_features_dict(text):
-    return {
+    initial = {
         'num_sentences': len(text),
         'avg_num_words_per_sentence': get_average_sentence_length(text),
         'vocab_size': get_vocab_size(text),
-        'avg_word_length': get_average_word_length(text),
         'sentence_length_range': get_sentence_length_range(text),
         'longest_sentence_length': get_length_of_longest_sentence(text),
-        'shortest_sentence_length': get_length_of_shortest_sentence(text)
     }
+    initial.update(get_sentence_starter_percents(text))
+    return initial
 
 
 sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
@@ -106,21 +117,23 @@ with open('./TeacherAI/tai-documents-v3.json') as essay_json_file:
 
     random.shuffle(feature_score_list)
     # 210 total in feature_score_list
-    train_set = feature_score_list[:110]
-    test_set = feature_score_list[110:]
+    train_set = feature_score_list[:170]
+    test_set = feature_score_list[170:]
 
-    # for Naive Bayes
-    # classifier = nltk.NaiveBayesClassifier.train(train_set)
-    # for Decision Tree
-    classifier = nltk.DecisionTreeClassifier.train(train_set)
+    # cross-validation
+    num_folds = 10
+    subset_size = int(len(train_set) / num_folds)
+    accuracies = []
 
+    for i in range(num_folds):
+        print("Round ", i)
+        testing_this_round = train_set[i * subset_size:][:subset_size]
+        training_this_round = train_set[:i * subset_size] + train_set[(i + 1) * subset_size:]
+        # train using training_this_round
+        # evaluate against testing_this_round
+        # save accuracy
+        classifier = nltk.DecisionTreeClassifier.train(training_this_round)
+        accuracies.append(nltk.classify.accuracy(classifier, testing_this_round))
+
+    print('K-Fold Cross Validation Accuracy: {}'.format(sum(accuracies) / len(accuracies)))
     print('Accuracy: {}'.format(nltk.classify.accuracy(classifier, test_set)))
-
-    # only available for Naive Bayes
-    # classifier.show_most_informative_features(5)
-
-    # input_file = './test.txt'
-    #
-    # with open(input_file) as test_file:
-    #     test_text = tokenized_text(test_file.read())
-    #     print(classifier.classify(get_features_dict(get_lead(test_text))))

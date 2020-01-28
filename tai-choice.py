@@ -85,21 +85,23 @@ with open('./TeacherAI/tai-documents-v3.json') as essay_json_file:
 
     random.shuffle(feature_score_list)
     # 210 total in feature_score_list
-    train_set = feature_score_list[:110]
-    test_set = feature_score_list[110:]
+    train_set = feature_score_list[:170]
+    test_set = feature_score_list[170:]
 
-    # for Naive Bayes
-    # classifier = nltk.NaiveBayesClassifier.train(train_set)
-    # for Decision Tree
-    classifier = nltk.DecisionTreeClassifier.train(train_set)
+    # cross-validation
+    num_folds = 10
+    subset_size = int(len(train_set) / num_folds)
+    accuracies = []
 
+    for i in range(num_folds):
+        print("Round ", i)
+        testing_this_round = train_set[i * subset_size:][:subset_size]
+        training_this_round = train_set[:i * subset_size] + train_set[(i + 1) * subset_size:]
+        # train using training_this_round
+        # evaluate against testing_this_round
+        # save accuracy
+        classifier = nltk.DecisionTreeClassifier.train(training_this_round)
+        accuracies.append(nltk.classify.accuracy(classifier, testing_this_round))
+
+    print('K-Fold Cross Validation Accuracy: {}'.format(sum(accuracies) / len(accuracies)))
     print('Accuracy: {}'.format(nltk.classify.accuracy(classifier, test_set)))
-
-    # only available for Naive Bayes
-    # classifier.show_most_informative_features(5)
-
-    # input_file = './test.txt'
-    #
-    # with open(input_file) as test_file:
-    #     test_text = tokenized_text(test_file.read())
-    #     print(classifier.classify(get_features_dict(to_single_paragraph(test_text))))
