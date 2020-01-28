@@ -2,6 +2,7 @@ import json
 import nltk
 import random
 import re
+import sys
 
 
 LEAD = 0
@@ -105,3 +106,10 @@ with open('./TeacherAI/tai-documents-v3.json') as essay_json_file:
 
     print('K-Fold Cross Validation Accuracy: {}'.format(sum(accuracies) / len(accuracies)))
     print('Accuracy: {}'.format(nltk.classify.accuracy(classifier, test_set)))
+
+    classifier = nltk.DecisionTreeClassifier.train(feature_score_list)
+
+    with open(sys.argv[1]) as input_file:
+        input_tokens = tokenized_text(input_file.read())
+        print('Predicted Spelling Score: {}'.format(
+            classifier.classify(get_features_dict(to_single_paragraph(input_tokens)))))

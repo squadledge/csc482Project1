@@ -2,6 +2,7 @@ import json
 import nltk
 import random
 import re
+import sys
 from nltk.corpus import cmudict
 
 
@@ -135,15 +136,10 @@ with open('./TeacherAI/tai-documents-v3.json') as essay_json_file:
 
     print('K-Fold Cross Validation Accuracy: {}'.format(sum(accuracies) / len(accuracies)))
     print('Accuracy: {}'.format(nltk.classify.accuracy(classifier, test_set)))
-    # print(classifier.show_most_informative_features(10))
-    # find mean accuracy over all rounds
-    # input_file = './test.txt'
-    #
-    # with open(input_file) as test_file:
-    #     test_text = tokenized_text(test_file.read())
-    #     print(classifier.classify(get_features_dict(get_ending(test_text))))
 
+    classifier = nltk.DecisionTreeClassifier.train(feature_score_list)
 
-
-
-
+    with open(sys.argv[1]) as input_file:
+        input_tokens = tokenized_text(input_file.read())
+        print('Predicted Ending Score: {}'.format(
+            classifier.classify(get_features_dict(get_ending(input_tokens)))))
