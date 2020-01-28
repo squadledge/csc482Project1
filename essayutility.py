@@ -49,7 +49,7 @@ def sentence_statistics(essay):
     def sentence_length_variation():
         return sum([(len(i) - m)*(len(i) - m) for i in temp]) / len(temp)
 
-    return (m,vocab_size(essay),)
+    return (m,sentence_length_variation(),vocab_size(essay))
 
 def essay_features(essay):
     """Generate Feature Dictionary for Classifier"""
@@ -66,8 +66,8 @@ def print_stats(stats):
 #     print_stats(stats)
 
 random.shuffle(data)
-train = data[:170]
-test = data[170:]
+train = data[:200]
+test = data[200:]
 
 test = [(essay_features(e), lead_score(e)) for e in test]
 train = [(essay_features(e), lead_score(e)) for e in train]
