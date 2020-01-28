@@ -21,24 +21,6 @@ def get_recent_version(grade_list):
     return max(grade_list, key=lambda grade: grade['version'])
 
 
-# returns the lead paragraph (list of list of tokens)
-def get_lead(raw_text):
-    for i in range(4, 0, -1):
-        for paragraph in raw_text:
-            if len(paragraph) >= i:
-                return paragraph
-    raise Exception('No paragraphs with sentences')
-
-
-# returns the ending paragraph (list of list of tokens)
-def get_ending(raw_text):
-    for i in range(4, 0, -1):
-        for paragraph in raw_text[::-1]:
-            if len(paragraph) >= i:
-                return paragraph
-    raise Exception('No paragraphs with sentences')
-
-
 def get_score(score_object, criteria):
     if criteria == LEAD:
         return score_object['score']['criteria']['lead']
@@ -48,12 +30,12 @@ def get_score(score_object, criteria):
         return score_object['score']['criteria']['spelling']
 
 
+def to_single_paragraph(text):
+    return [sentence for paragraph in text for sentence in paragraph]
+
+
 def paragraph_to_words(paragraph):
     return [word.lower() for sentence in paragraph for word in sentence]
-
-
-def get_average_sentence_length(paragraph):
-    return sum(map(lambda sentence: len(sentence), paragraph)) / len(paragraph)
 
 
 def get_vocab_size(paragraph):
@@ -67,31 +49,19 @@ def get_average_word_length(paragraph):
     return sum(map(len, words)) / len(words)
 
 
-def get_length_of_longest_sentence(paragraph):
-    sentence_lengths = list(map(len, paragraph))
-    return max(sentence_lengths)
-
-
-def get_length_of_shortest_sentence(paragraph):
-    sentence_lengths = list(map(len, paragraph))
-    return min(sentence_lengths)
-
-
-def get_sentence_length_range(paragraph):
-    max_length = get_length_of_longest_sentence(paragraph)
-    min_length = get_length_of_shortest_sentence(paragraph)
-    return max_length - min_length
+def get_percent_vowels(paragraph):
+    words = paragraph_to_words(paragraph)
+    letters = [letter for word in words for letter in word]
+    vowel_list = ['a', 'e', 'i', 'o', 'u']
+    return (len(list(filter(lambda letter: letter.lower() in vowel_list, letters)))
+            / len(letters))
 
 
 def get_features_dict(text):
     return {
-        'num_sentences': len(text),
-        'avg_num_words_per_sentence': get_average_sentence_length(text),
         'vocab_size': get_vocab_size(text),
         'avg_word_length': get_average_word_length(text),
-        'sentence_length_range': get_sentence_length_range(text),
-        'longest_sentence_length': get_length_of_longest_sentence(text),
-        'shortest_sentence_length': get_length_of_shortest_sentence(text)
+        'percent_vowels': get_percent_vowels(text)
     }
 
 
@@ -109,7 +79,7 @@ with open('./TeacherAI/tai-documents-v3.json') as essay_json_file:
 
     feature_score_list = list(
         map(
-            lambda essay_tuple: (get_features_dict(essay_tuple[1]), get_score(essay_tuple[0], CHOICE)),
+            lambda essay_tuple: (get_features_dict(to_single_paragraph(essay_tuple[1])), get_score(essay_tuple[0], CHOICE)),
             essay_list
         )
     )
@@ -133,4 +103,4 @@ with open('./TeacherAI/tai-documents-v3.json') as essay_json_file:
     #
     # with open(input_file) as test_file:
     #     test_text = tokenized_text(test_file.read())
-    #     print(classifier.classify(get_features_dict(test_text)))
+    #     print(classifier.classify(get_features_dict(to_single_paragraph(test_text))))
