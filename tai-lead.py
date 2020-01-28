@@ -15,7 +15,6 @@ def tokenized_text(raw_text):
              for s in sent_tokenizer.tokenize(par.strip())]
             for par in raw_text.split("\n\n")]
 
-
 # returns most recent grade dict from grade list
 def get_recent_version(grade_list):
     return max(grade_list, key=lambda grade: grade['version'])

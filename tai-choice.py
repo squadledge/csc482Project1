@@ -64,7 +64,6 @@ def get_features_dict(text):
         'percent_vowels': get_percent_vowels(text)
     }
 
-
 sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 
 with open('./TeacherAI/tai-documents-v3.json') as essay_json_file:

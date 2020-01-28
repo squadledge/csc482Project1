@@ -2,12 +2,13 @@ import json
 import nltk
 import random
 import re
+from nltk.corpus import cmudict
 
 
 LEAD = 0
 ENDING = 1
 CHOICE = 2
-
+d = cmudict.dict()
 
 # returns tokenized formatted as: Paragraph List -> Sentence List -> Word List
 def tokenized_text(raw_text):
@@ -73,6 +74,13 @@ def get_sentence_length_range(paragraph):
     min_length = get_length_of_shortest_sentence(paragraph)
     return max_length - min_length
 
+def syllable_word_ratio(paragraph):
+    def nsyl(word):
+        try:
+            return [len(list(y for y in x if y[-1].isdigit())) for x in d[word.lower()]][0]
+        except:
+            return 0
+    return sum([nsyl(word) for sen in paragraph for word in sen]) / sum([len(sen) for sen in paragraph])
 
 def get_features_dict(text):
     return {
@@ -82,7 +90,7 @@ def get_features_dict(text):
         'avg_word_length': get_average_word_length(text),
         'sentence_length_range': get_sentence_length_range(text),
         'longest_sentence_length': get_length_of_longest_sentence(text),
-        'shortest_sentence_length': get_length_of_shortest_sentence(text)
+        'syllable_word_ratio': syllable_word_ratio(text)
     }
 
 
@@ -105,23 +113,37 @@ with open('./TeacherAI/tai-documents-v3.json') as essay_json_file:
         )
     )
 
+
     random.shuffle(feature_score_list)
     # 210 total in feature_score_list
-    train_set = feature_score_list[:110]
-    test_set = feature_score_list[110:]
+    train_set = feature_score_list[:170]
+    test_set = feature_score_list[170:]
+    #cross-validation
+    num_folds = 10
+    subset_size = int(len(train_set) / num_folds)
+    accuracies = []
 
-    # for Naive Bayes
-    # classifier = nltk.NaiveBayesClassifier.train(train_set)
-    # for Decision Tree
-    classifier = nltk.DecisionTreeClassifier.train(train_set)
+    for i in range(num_folds):
+        print("Round ",i)
+        testing_this_round = train_set[i * subset_size:][:subset_size]
+        training_this_round = train_set[:i * subset_size] + train_set[(i + 1) * subset_size:]
+        # train using training_this_round
+        # evaluate against testing_this_round
+        # save accuracy
+        classifier = nltk.DecisionTreeClassifier.train(training_this_round)
+        accuracies.append(nltk.classify.accuracy(classifier, testing_this_round))
 
+    print('K-Fold Cross Validation Accuracy: {}'.format(sum(accuracies) / len(accuracies)))
     print('Accuracy: {}'.format(nltk.classify.accuracy(classifier, test_set)))
-
-    # only available for Naive Bayes
-    # classifier.show_most_informative_features(5)
-
+    # print(classifier.show_most_informative_features(10))
+    # find mean accuracy over all rounds
     # input_file = './test.txt'
     #
     # with open(input_file) as test_file:
     #     test_text = tokenized_text(test_file.read())
     #     print(classifier.classify(get_features_dict(get_ending(test_text))))
+
+
+
+
+

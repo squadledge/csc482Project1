@@ -66,8 +66,8 @@ def print_stats(stats):
 #     print_stats(stats)
 
 random.shuffle(data)
-train = data[:200]
-test = data[200:]
+train = data[:168]
+test = data[168:]
 
 test = [(essay_features(e), lead_score(e)) for e in test]
 train = [(essay_features(e), lead_score(e)) for e in train]
