@@ -103,7 +103,7 @@ def get_features_dict(text):
 
 sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 
-with open('./TeacherAI/tai-documents-v3.json') as essay_json_file:
+with open('./tai-documents-v3.json') as essay_json_file:
     # list of essays and grades
     # [{id: ID, plaintext: PT, doctitle: DT, grades: G}, ...]
     json_list = json.load(essay_json_file)
