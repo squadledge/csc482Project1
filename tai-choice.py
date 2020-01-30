@@ -104,11 +104,10 @@ with open('./TeacherAI/tai-documents-v3.json') as essay_json_file:
     model = lda.fit(X_train, Y_train)
 
     pred = model.predict(X_test)
-    pred = model.predict(X_test)
 
-    print(accuracy_score(Y_test, pred))
-
-    # with open(sys.argv[1]) as input_file:
-    #     input_tokens = tokenized_text(input_file.read())
-    #     print('Predicted Spelling Score: {}'.format(
-    #         classifier.classify(get_features_dict(to_single_paragraph(input_tokens)))))
+    with open(sys.argv[1]) as input_file:
+        input_tokens = tokenized_text(input_file.read())
+        i = get_features_dict(to_single_paragraph(input_tokens))
+        features = [[i["vocab_size"], i["avg_word_length"], i["percent_vowels"]]]
+        print('Predicted Spelling Score: {}'.format(
+            model.predict(features)[0]))

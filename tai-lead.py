@@ -16,6 +16,10 @@ def tokenized_text(raw_text):
              for s in sent_tokenizer.tokenize(par.strip())]
             for par in raw_text.split("\n\n")]
 
+def to_single_paragraph(text):
+    return [sentence for paragraph in text for sentence in paragraph]
+
+
 # returns most recent grade dict from grade list
 def get_recent_version(grade_list):
     return max(grade_list, key=lambda grade: grade['version'])
@@ -141,4 +145,15 @@ with open('./TeacherAI/tai-documents-v3.json') as essay_json_file:
 
     pred = model.predict(X_test)
 
-    print(accuracy_score(Y_test, pred))
+    # print(accuracy_score(Y_test, pred))
+
+    with open(sys.argv[1]) as input_file:
+        input_tokens = tokenized_text(input_file.read())
+        i = get_features_dict(get_lead(input_tokens))
+        features = [[i["num_sentences"],
+                i["avg_num_words_per_sentence"],
+                i["vocab_size"],
+                i['sentence_length_range'],
+                i['longest_sentence_length']]]
+        print('Predicted Lead Score: {}'.format(
+            model.predict(features)[0]))

@@ -141,4 +141,17 @@ with open('./TeacherAI/tai-documents-v3.json') as essay_json_file:
 
     pred = model.predict(X_test)
 
-    print(accuracy_score(Y_test, pred))
+    # print(accuracy_score(Y_test, pred))
+
+    with open(sys.argv[1]) as input_file:
+        input_tokens = tokenized_text(input_file.read())
+        i = get_features_dict(get_ending(input_tokens))
+        features = [[i["num_sentences"],
+                i["avg_num_words_per_sentence"],
+                i["vocab_size"],
+                i['avg_word_length'],
+                i['sentence_length_range'],
+                i['longest_sentence_length'],
+                i['syllable_word_ratio']]]
+        print('Predicted Ending Score: {}'.format(
+            model.predict(features)[0]))
