@@ -117,31 +117,28 @@ with open('./TeacherAI/tai-documents-v3.json') as essay_json_file:
     )
 
     random.shuffle(feature_score_list)
-    # 210 total in feature_score_list
-    train_set = feature_score_list[:170]
-    test_set = feature_score_list[170:]
 
-    # cross-validation
-    num_folds = 10
-    subset_size = int(len(train_set) / num_folds)
-    accuracies = []
+    X_train = [i[0] for i in feature_score_list]
+    X_train = [[i["num_sentences"],
+                i["avg_num_words_per_sentence"],
+                i["vocab_size"],
+                i['sentence_length_range'],
+                i['longest_sentence_length']] for i in X_train]
+    Y_train = [str(i[1]) for i in feature_score_list]
 
-    for i in range(num_folds):
-        print("Round ", i)
-        testing_this_round = train_set[i * subset_size:][:subset_size]
-        training_this_round = train_set[:i * subset_size] + train_set[(i + 1) * subset_size:]
-        # train using training_this_round
-        # evaluate against testing_this_round
-        # save accuracy
-        classifier = nltk.DecisionTreeClassifier.train(training_this_round)
-        accuracies.append(nltk.classify.accuracy(classifier, testing_this_round))
+    X_test = X_train[170:]
+    Y_test = Y_train[170:]
 
-    print('K-Fold Cross Validation Accuracy: {}'.format(sum(accuracies) / len(accuracies)))
-    print('Accuracy: {}'.format(nltk.classify.accuracy(classifier, test_set)))
+    X_train = X_train[:170]
+    Y_train = Y_train[:170]
 
-    classifier = nltk.DecisionTreeClassifier.train(feature_score_list)
+    from sklearn.discriminant_analysis import LinearDiscriminantAnalysis, QuadraticDiscriminantAnalysis
+    import numpy as np
+    from sklearn.metrics import confusion_matrix, classification_report, precision_score, accuracy_score
 
-    with open(sys.argv[1]) as input_file:
-        input_tokens = tokenized_text(input_file.read())
-        print('Predicted Lead Score: {}'.format(
-            classifier.classify(get_features_dict(get_lead(input_tokens)))))
+    lda = LinearDiscriminantAnalysis()
+    model = lda.fit(X_train, Y_train)
+
+    pred = model.predict(X_test)
+
+    print(accuracy_score(Y_test, pred))

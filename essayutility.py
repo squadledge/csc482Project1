@@ -1,76 +1,116 @@
 import json
 import nltk
-import re
-import pprint
-from nltk import word_tokenize
-from nltk import sent_tokenize
-from nltk.corpus import gutenberg
-from urllib import request
-from nltk.probability import FreqDist
-from nltk.probability import ConditionalFreqDist
 import random
+import re
+import sys
 
-with open('TeacherAI/tai-documents-v3.json') as f:
-    data = json.load(f)
+from sklearn.feature_extraction import DictVectorizer
 
-def lead_score(j):
-    return j["grades"][1]["score"]["criteria"]["lead"]
 
-def score_list(score):
-    return [i for i in data if lead_score(i) == score]
+LEAD = 0
+ENDING = 1
+CHOICE = 2
 
-# lead_counts = [str(lead_score(i)) for i in data]
-# lead_counts = FreqDist(lead_counts)
-# print(lead_counts.most_common(10))
 
-def vocab_size(essay):
-    words = re.split(r'\W+',essay["plaintext"])
-    words = [w.lower() for w in words]
-    return len(set(words))
+# returns tokenized formatted as: Paragraph List -> Sentence List -> Word List
+def tokenized_text(raw_text):
+    return [[nltk.word_tokenize(s)
+             for s in sent_tokenizer.tokenize(par.strip())]
+            for par in raw_text.split("\n\n")]
 
-# good_vocab_avg = [vocab_size(plaintext_prep(i)) for i in good_leads]
-# good_vocab_avg = sum(good_vocab_avg) / len(good_vocab_avg)
-# print(good_vocab_avg)
-#
-# bad_vocab_avg = [vocab_size(plaintext_prep(i)) for i in bad_leads]
-# bad_vocab_avg = sum(bad_vocab_avg) / len(bad_vocab_avg)
-# print(bad_vocab_avg)
 
-def sentence_statistics(essay):
-    """Explaratory Data Analysis Function"""
-    temp = sent_tokenize(essay["plaintext"])
-    temp = [word_tokenize(i) for i in temp]
+# returns most recent grade dict from grade list
+def get_recent_version(grade_list):
+    return max(grade_list, key=lambda grade: grade['version'])
 
-    def average_sentence_length():
-        return sum([len(i) for i in temp]) / len(temp)
 
-    m = average_sentence_length()
+def get_score(score_object, criteria):
+    if criteria == LEAD:
+        return score_object['score']['criteria']['lead']
+    elif criteria == ENDING:
+        return score_object['score']['criteria']['ending']
+    else:
+        return score_object['score']['criteria']['spelling']
 
-    def sentence_length_variation():
-        return sum([(len(i) - m)*(len(i) - m) for i in temp]) / len(temp)
 
-    return (m,sentence_length_variation(),vocab_size(essay))
+def to_single_paragraph(text):
+    return [sentence for paragraph in text for sentence in paragraph]
 
-def essay_features(essay):
-    """Generate Feature Dictionary for Classifier"""
-    stats = sentence_statistics(essay)
-    return {"avg_sentence_length":stats[0],"vocab_size":stats[2]}
 
-def print_stats(stats):
-    print(sum([i[0] for i in stats]) / len(stats), " ", sum([i[1] for i in stats]) / len(stats),
-          sum([i[2] for i in stats]) / len(stats))
+def paragraph_to_words(paragraph):
+    return [word.lower() for sentence in paragraph for word in sentence]
 
-# for i in [0.5 * i for i in range(2,9)]:
-#     stats = [sentence_statistics(i) for i in score_list(i)]
-#     print(str(i)," ",len(stats),": ")
-#     print_stats(stats)
 
-random.shuffle(data)
-train = data[:168]
-test = data[168:]
+def get_vocab_size(paragraph):
+    words = paragraph_to_words(paragraph)
+    vocab = filter(lambda word: re.match(r"^[a-z]", word), words)
+    return len(set(vocab))
 
-test = [(essay_features(e), lead_score(e)) for e in test]
-train = [(essay_features(e), lead_score(e)) for e in train]
 
-classifier = nltk.DecisionTreeClassifier.train(train,entropy_cutoff=0.1)
-print("Accuracy: ", nltk.classify.accuracy(classifier, test))
+def get_average_word_length(paragraph):
+    words = paragraph_to_words(paragraph)
+    return sum(map(len, words)) / len(words)
+
+
+def get_percent_vowels(paragraph):
+    words = paragraph_to_words(paragraph)
+    letters = [letter for word in words for letter in word]
+    vowel_list = ['a', 'e', 'i', 'o', 'u']
+    return (len(list(filter(lambda letter: letter.lower() in vowel_list, letters)))
+            / len(letters))
+
+
+def get_features_dict(text):
+    return {
+        'vocab_size': get_vocab_size(text),
+        'avg_word_length': get_average_word_length(text),
+        'percent_vowels': get_percent_vowels(text)
+    }
+
+sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+
+with open('./TeacherAI/tai-documents-v3.json') as essay_json_file:
+    # list of essays and grades
+    # [{id: ID, plaintext: PT, doctitle: DT, grades: G}, ...]
+    json_list = json.load(essay_json_file)
+
+    # grades: [{version: V, comment: c, score: s, markup: M, checkboxes: C}, ...]
+    # score: {total: T, average: A, criteria: {overall: O, lead: L, ending: E, punctuation: P, ...}, ...}
+    # essay_list is list of tuples: (most recent grade dict, tokenized text)
+    essay_list = list(map(lambda d: (get_recent_version(d['grades']), tokenized_text(d['plaintext'])), json_list))
+
+    feature_score_list = list(
+        map(
+            lambda essay_tuple: (get_features_dict(to_single_paragraph(essay_tuple[1])), get_score(essay_tuple[0], CHOICE)),
+            essay_list
+        )
+    )
+
+    random.shuffle(feature_score_list)
+
+    X_train = [i[0] for i in feature_score_list]
+    X_train = [[i["vocab_size"],i["avg_word_length"],i["percent_vowels"]] for i in X_train]
+    Y_train = [str(i[1]) for i in feature_score_list]
+
+    X_test = X_train[170:]
+    Y_test = Y_train[170:]
+
+    X_train = X_train[:170]
+    Y_train = Y_train[:170]
+
+    from sklearn.discriminant_analysis import LinearDiscriminantAnalysis, QuadraticDiscriminantAnalysis
+    import numpy as np
+    from sklearn.metrics import confusion_matrix, classification_report, precision_score, accuracy_score
+
+    lda = LinearDiscriminantAnalysis()
+    model = lda.fit(X_train,Y_train)
+
+    pred = model.predict(X_test)
+    pred = model.predict(X_test)
+    
+    print(accuracy_score(Y_test, pred))
+
+
+
+
+
